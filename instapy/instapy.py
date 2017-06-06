@@ -35,7 +35,7 @@ class InstaPy:
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--lang=en-US')
     chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en-US'})
-    self.browser = webdriver.Chrome('./assets/chromedriver', chrome_options=chrome_options)
+    self.browser = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=chrome_options)
     self.browser.implicitly_wait(25)
 
     self.logFile = open('./logs/logFile.txt', 'a')
