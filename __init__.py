@@ -1,1 +1,1 @@
-from instapy import InstaPy
+from .instapy import InstaPy
