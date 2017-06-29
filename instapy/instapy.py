@@ -25,7 +25,8 @@ from .unfollow_util import dump_follow_restriction
 
 class InstaPy:
   """Class to be instantiated to use the script"""
-  def __init__(self, username=None, password=None, nogui=False, host=None, port=None):
+  def __init__(self, username=None, password=None, nogui=False, host=None, port=None, browser='chrome'):
+
     if nogui:
       self.display = Display(visible=0, size=(800, 600))
       self.display.start()
@@ -35,6 +36,15 @@ class InstaPy:
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--lang=en-US')
     chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en-US'})
+
+    if browser == 'firefox':
+      firefoxprofile = webdriver.FirefoxProfile()
+      # firefoxprofile.set_preference("intl.accept_languages", "fr")
+      firefoxprofile.set_preference('intl.accept_languages', 'en-GB')
+      self.browser = webdriver.Firefox(firefox_profile=firefoxprofile)
+    else:
+      self.browser = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=chrome_options)
+    self.browser.implicitly_wait(25)
 
     if host is not None:
       if port is not None:
