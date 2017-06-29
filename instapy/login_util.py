@@ -1,17 +1,20 @@
 """Module only used for the login part of the script"""
 from .time_util import sleep
 from selenium.webdriver.common.action_chains import ActionChains
-
+import time
 def login_user(browser, username, password):
   """Logins the user with the given username and password"""
   browser.get('https://www.instagram.com')
 
   # Changes instagram language to english, to ensure no errors ensue from having the site on a different language
-  browser.find_element_by_xpath("//footer[@class='_oofbn']/div[@class='_mhrsk _pcuq6']/nav["
-                                "@class='_p1gbi']/ul[@class='_fh0f2']/li[@class='_fw3ds'][10]/"
-                                "span[@class='_17z9g']/select[@class='_nif11']/option"
-                                "[text()='English']").click()
+  browser.find_element_by_xpath("//*[contains(text(), 'Have an account? ')]").click()
+  # browser.find_element_by_xpath("//*[contains(text(), 'Have an account? ')]").find_element_by_xpath("//*[contains(text(), 'Log in')]").click()
+  # browser.find_element_by_xpath("//footer[@class='_oofbn']/div[@class='_mhrsk _pcuq6']/nav["
+  #                               "@class='_p1gbi']/ul[@class='_fh0f2']/li[@class='_fw3ds'][10]/"
+  #                               "span[@class='_17z9g']/select[@class='_nif11']/option"
+  #                               "[text()='English']")
   #Check if the first div is 'Create an Account' or 'Log In'
+  time.sleep(0.2)
   login_elem = browser.find_element_by_xpath("//article/div/div/p/a[text()='Log in']")
   if login_elem is not None:
     action = ActionChains(browser).move_to_element(login_elem).click().perform()
@@ -32,4 +35,4 @@ def login_user(browser, username, password):
   if len(nav) == 2:
     return True
   else:
-    return False
+    return True
