@@ -25,7 +25,7 @@ from .unfollow_util import dump_follow_restriction
 
 class InstaPy:
   """Class to be instantiated to use the script"""
-  def __init__(self, username=None, password=None, nogui=False):
+  def __init__(self, username=None, password=None, nogui=False, host=None, port=None):
     if nogui:
       self.display = Display(visible=0, size=(800, 600))
       self.display.start()
@@ -35,9 +35,18 @@ class InstaPy:
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--lang=en-US')
     chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en-US'})
-    self.browser = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=chrome_options)
-    self.browser.implicitly_wait(25)
 
+    if host is not None:
+      if port is not None:
+        PROXY = host
+        PROXY += ":"
+        PROXY += port 
+        
+        chrome_options.add_argument('--proxy-server=%s' % PROXY)
+
+    self.browser = webdriver.Chrome('./assets/chromedriver', chrome_options=chrome_options)
+    self.browser.implicitly_wait(25)
+    
     self.logFile = open('./logs/logFile.txt', 'a')
     self.logFile.write('Session started - %s\n' \
                        % (datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
