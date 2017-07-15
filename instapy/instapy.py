@@ -43,7 +43,7 @@ class InstaPy:
       firefoxprofile.set_preference('intl.accept_languages', 'en-GB')
       self.browser = webdriver.Firefox(firefox_profile=firefoxprofile)
     else:
-      self.browser = webdriver.Chrome('/usr/bin/chromedriver', chrome_options=chrome_options)
+      self.browser = webdriver.Chrome('./assets/chromedriver', chrome_options=chrome_options)
     self.browser.implicitly_wait(25)
 
     if host is not None:
